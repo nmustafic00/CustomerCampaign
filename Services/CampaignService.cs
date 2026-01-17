@@ -31,11 +31,11 @@ namespace CustomerCampaign.Services
             return campaign;
         }
 
-        public async Task<AgentRewardEntry> RewardCustomerAsync(CampaignRewardDto dto)
+        public async Task<AgentRewardEntry> RewardCustomerAsync(int campaignId, CampaignRewardDto dto)
         {
             var campaign = await _dbContext.Campaigns
                 .Include(c => c.RewardEntries)
-                .FirstOrDefaultAsync(c => c.Id == dto.CampaignId);
+                .FirstOrDefaultAsync(c => c.Id == campaignId);
 
             if (campaign == null)
                 throw new Exception("Campaign not found");
@@ -54,7 +54,7 @@ namespace CustomerCampaign.Services
             {
                 AgentId = dto.AgentId,
                 CustomerId = dto.CustomerId,
-                CampaignId = dto.CampaignId,
+                CampaignId = campaignId,
                 RewardDate = DateTime.UtcNow
             };
 
@@ -70,5 +70,6 @@ namespace CustomerCampaign.Services
 
             return entry;
         }
+
     }
 }

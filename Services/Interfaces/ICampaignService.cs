@@ -6,6 +6,6 @@ namespace CustomerCampaign.Services.Interfaces
     public interface ICampaignService
     {
         Task<Campaign> CreateCampaignAsync(CreateCampaignDto dto);
-        Task<AgentRewardEntry> RewardCustomerAsync(CampaignRewardDto dto);
+        Task<AgentRewardEntry> RewardCustomerAsync(int campaignId, CampaignRewardDto dto);
     }
 }

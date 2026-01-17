@@ -1,5 +1,4 @@
 ﻿using CustomerCampaign.DTOs;
-using CustomerCampaign.Services;
 using CustomerCampaign.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +22,9 @@ namespace CustomerCampaign.Controllers
         }
 
         [HttpPost("{campaignId}/reward")]
-        public async Task<IActionResult> RewardCustomer([FromBody] CampaignRewardDto dto)
+        public async Task<IActionResult> RewardCustomer(int campaignId, [FromBody] CampaignRewardDto dto)
         {
-            var entry = await _campaignService.RewardCustomerAsync(dto);
+            var entry = await _campaignService.RewardCustomerAsync(campaignId, dto);
             return Ok(entry);
         }
     }

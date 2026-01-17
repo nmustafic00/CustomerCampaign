@@ -1,4 +1,5 @@
 using CustomerCampaign.Data;
+using CustomerCampaign.Infrastructure.Integrations.Soap;
 using CustomerCampaign.Services;
 using CustomerCampaign.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,15 @@ builder.Services.AddDbContext<CustomerCampaignDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ICampaignService, CampaignService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+builder.Services.AddHttpClient<ISoapCustomerClient, SoapCustomerClient>(client =>
+{
+    client.BaseAddress = new Uri("https://www.crcind.com/csp/samples/");
+    client.DefaultRequestHeaders.Clear();
+    client.DefaultRequestHeaders.Add("Accept", "text/xml");
+});
+
 
 var app = builder.Build();
 
