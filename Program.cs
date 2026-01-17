@@ -1,4 +1,6 @@
 using CustomerCampaign.Data;
+using CustomerCampaign.Services;
+using CustomerCampaign.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CustomerCampaignDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICampaignService, CampaignService>();
 
 var app = builder.Build();
 

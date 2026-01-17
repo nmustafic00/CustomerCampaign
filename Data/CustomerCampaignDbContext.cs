@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CustomerCampaign.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomerCampaign.Data
 {
@@ -8,5 +9,8 @@ namespace CustomerCampaign.Data
           : base(options)
         {
         }
+
+        public DbSet<AgentRewardEntry> AgentRewardEntries => Set<AgentRewardEntry>();
+        public DbSet<Campaign> Campaigns => Set<Campaign>();
     }
 }
