@@ -12,11 +12,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<CustomerCampaignDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ICampaignService, CampaignService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICampaignResultService, CampaignResultService>();
 
 builder.Services.AddHttpClient<ISoapCustomerClient, SoapCustomerClient>(client =>
 {
@@ -25,6 +24,8 @@ builder.Services.AddHttpClient<ISoapCustomerClient, SoapCustomerClient>(client =
     client.DefaultRequestHeaders.Add("Accept", "text/xml");
 });
 
+builder.Services.AddDbContext<CustomerCampaignDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

@@ -9,7 +9,6 @@ namespace CustomerCampaign.Services
     public class CampaignService : ICampaignService
     {
         private readonly CustomerCampaignDbContext _dbContext;
-        private const int DailyLimit = 5;
 
         public CampaignService(CustomerCampaignDbContext dbContext)
         {
@@ -42,11 +41,9 @@ namespace CustomerCampaign.Services
 
             var today = DateTime.UtcNow.Date;
 
-            // Limit po agentu za danas
             int rewardsToday = campaign.RewardEntries
                 .Count(x => x.AgentId == dto.AgentId && x.RewardDate.Date == today);
-
-            // Provjera da li je korisnik već nagrađen u ovoj kampanji
+      
             bool customerAlreadyRewarded = campaign.RewardEntries
                 .Any(x => x.CustomerId == dto.CustomerId);
 
