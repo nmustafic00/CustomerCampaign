@@ -1,6 +1,7 @@
 ﻿using CustomerCampaign.Data;
 using CustomerCampaign.DTOs;
 using CustomerCampaign.Entities;
+using CustomerCampaign.Exceptions;
 using CustomerCampaign.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +10,12 @@ namespace CustomerCampaign.Services
     public class CampaignService : ICampaignService
     {
         private readonly CustomerCampaignDbContext _dbContext;
+        private readonly ICurrentUserService _currentUser;
 
-        public CampaignService(CustomerCampaignDbContext dbContext)
+        public CampaignService( CustomerCampaignDbContext dbContext, ICurrentUserService currentUser)
         {
             _dbContext = dbContext;
+            _currentUser = currentUser;
         }
 
         public async Task<Campaign> CreateCampaignAsync(CreateCampaignDto dto)
@@ -30,26 +33,34 @@ namespace CustomerCampaign.Services
             return campaign;
         }
 
-        public async Task<AgentRewardEntry> RewardCustomerAsync(int campaignId, CampaignRewardDto dto)
+        public async Task<RewardCustomerResponseDto> RewardCustomerAsync(int campaignId, CampaignRewardDto dto)
         {
+            if (_currentUser.Role != "Agent")
+                throw new ForbiddenException("Only agents can reward customers");
+
+            var agentId = _currentUser.UserId;
+
             var campaign = await _dbContext.Campaigns
                 .Include(c => c.RewardEntries)
                 .FirstOrDefaultAsync(c => c.Id == campaignId);
 
             if (campaign == null)
-                throw new Exception("Campaign not found");
+                throw new NotFoundException("Campaign not found");
 
             var today = DateTime.UtcNow.Date;
 
+            if (today < campaign.StartDate.Date || today > campaign.EndDate.Date)
+                throw new BadRequestException("Campaign is not active");
+
             int rewardsToday = campaign.RewardEntries
-                .Count(x => x.AgentId == dto.AgentId && x.RewardDate.Date == today);
+                .Count(x => x.AgentId == agentId && x.RewardDate.Date == today);
       
             bool customerAlreadyRewarded = campaign.RewardEntries
                 .Any(x => x.CustomerId == dto.CustomerId);
 
             var entry = new AgentRewardEntry
             {
-                AgentId = dto.AgentId,
+                AgentId = agentId,
                 CustomerId = dto.CustomerId,
                 CampaignId = campaignId,
                 RewardDate = DateTime.UtcNow
@@ -65,8 +76,15 @@ namespace CustomerCampaign.Services
             _dbContext.AgentRewardEntries.Add(entry);
             await _dbContext.SaveChangesAsync();
 
-            return entry;
+            return new RewardCustomerResponseDto
+            {
+                Id = entry.Id,
+                CampaignId = entry.CampaignId,
+                AgentId = entry.AgentId,
+                CustomerId = entry.CustomerId,
+                Status = entry.Status,
+                RewardDate = entry.RewardDate
+            };
         }
-
     }
 }

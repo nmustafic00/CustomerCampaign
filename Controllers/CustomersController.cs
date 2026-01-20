@@ -1,4 +1,5 @@
 ﻿using CustomerCampaign.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -12,6 +13,7 @@ public class CustomersController : ControllerBase
         _customerService = customerService;
     }
 
+    [Authorize(Roles = "Agent")]
     [HttpGet("{customerId}/preview")]
     public async Task<IActionResult> GetCustomerPreview(string customerId)
     {

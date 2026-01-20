@@ -1,6 +1,7 @@
 ﻿using CustomerCampaign.DTOs;
 using CustomerCampaign.Services;
 using CustomerCampaign.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerCampaign.Controllers
@@ -17,6 +18,8 @@ namespace CustomerCampaign.Controllers
             _campaignService = campaignService;
             _campaignResultService = campaignResultService;
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateCampaign([FromBody] CreateCampaignDto dto)
         {
@@ -24,6 +27,7 @@ namespace CustomerCampaign.Controllers
             return Ok(campaign);
         }
 
+        [Authorize(Roles = "Agent")]
         [HttpPost("{campaignId}/reward")]
         public async Task<IActionResult> RewardCustomer(int campaignId, [FromBody] CampaignRewardDto dto)
         {
@@ -31,6 +35,7 @@ namespace CustomerCampaign.Controllers
             return Ok(entry);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("results/{campaignId}")]
         public async Task<IActionResult> UploadCampaignCsv(int campaignId, IFormFile csvFile)
         {
@@ -41,6 +46,7 @@ namespace CustomerCampaign.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "Admin,Agent")]
         [HttpGet("results/{campaignId}")]
         public async Task<IActionResult> GetCampaignResults(int campaignId)
         {
