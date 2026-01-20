@@ -7,5 +7,7 @@ namespace CustomerCampaign.Services.Interfaces
     {
         Task<Campaign> CreateCampaignAsync(CreateCampaignDto dto);
         Task<RewardCustomerResponseDto> RewardCustomerAsync(int campaignId, CampaignRewardDto dto);
+        Task<IEnumerable<CampaignBasicDto>> GetAllCampaignsAsync();
+        Task<CampaignDetailDto?> GetCampaignByIdAsync(int id);
     }
 }

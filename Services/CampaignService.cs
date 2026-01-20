@@ -18,6 +18,37 @@ namespace CustomerCampaign.Services
             _currentUser = currentUser;
         }
 
+        public async Task<IEnumerable<CampaignBasicDto>> GetAllCampaignsAsync()
+        {
+            return await _dbContext.Campaigns
+                .Select(c => new CampaignBasicDto
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
+        }
+
+        public async Task<CampaignDetailDto?> GetCampaignByIdAsync(int id)
+        {
+            var campaign = await _dbContext.Campaigns
+                .Include(c => c.RewardEntries)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (campaign == null)
+                throw new NotFoundException("Campaign not found");
+
+            return new CampaignDetailDto
+            {
+                Id = campaign.Id,
+                Name = campaign.Name,
+                StartDate = campaign.StartDate,
+                EndDate = campaign.EndDate,
+                DailyLimitPerAgent = campaign.DailyLimitPerAgent
+            };
+        }
+
+
         public async Task<Campaign> CreateCampaignAsync(CreateCampaignDto dto)
         {
             var campaign = new Campaign

@@ -19,6 +19,27 @@ namespace CustomerCampaign.Controllers
             _campaignResultService = campaignResultService;
         }
 
+        [Authorize(Roles = "Admin,Agent")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllCampaigns()
+        {
+            var campaigns = await _campaignService.GetAllCampaignsAsync();
+
+            return Ok(campaigns);
+        }
+
+        [Authorize(Roles = "Admin,Agent")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCampaignById(int id)
+        {
+            var campaign = await _campaignService.GetCampaignByIdAsync(id);
+            if (campaign == null)
+                return NotFound($"Campaign with id {id} not found.");
+
+            return Ok(campaign); 
+        }
+
+
         [Authorize(Roles = "Admin")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateCampaign([FromBody] CreateCampaignDto dto)
