@@ -50,6 +50,7 @@ namespace CustomerCampaign.Services
             var user = new User
             {
                 Username = dto.Username,
+                FullName = dto.FullName,
                 Role = "Agent",
                 PasswordHash = passwordHasher.HashPassword(null, dto.Password)
             };

@@ -1,0 +1,32 @@
+<div class="upload-csv">
+  <h1>Upload Campaign CSV</h1>
+
+  <div class="card">
+    <div class="form-group">
+      <label for="csvFile">Select CSV File</label>
+      <input
+        id="csvFile"
+        type="file"
+        accept=".csv"
+        (change)="onFileSelected($event)"
+      >
+      <div *ngIf="selectedFile" class="file-info">
+        Selected file: {{ selectedFile.name }}
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="error">{{ error }}</div>
+    <div *ngIf="success" style="color: #28a745; margin-bottom: 10px;">
+      {{ success }}
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="router.navigate(['/campaigns'])">
+        Cancel
+      </button>
+      <button type="button" class="btn btn-primary" (click)="uploadFile()" [disabled]="!selectedFile || loading">
+        {{ loading ? 'Uploading...' : 'Upload CSV' }}
+      </button>
+    </div>
+  </div>
+</div>

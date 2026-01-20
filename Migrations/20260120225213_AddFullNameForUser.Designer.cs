@@ -4,6 +4,7 @@ using CustomerCampaign.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerCampaign.Migrations
 {
     [DbContext(typeof(CustomerCampaignDbContext))]
-    partial class CustomerCampaignDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260120225213_AddFullNameForUser")]
+    partial class AddFullNameForUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

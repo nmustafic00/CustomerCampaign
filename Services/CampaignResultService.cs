@@ -82,6 +82,14 @@ namespace CustomerCampaign.Services
                     .Where(r => r.CampaignId == campaignId && r.CustomerId == row.CustomerId)
                     .FirstOrDefaultAsync();
 
+                string agentName = null;
+                if (reward != null)
+                {
+                    var agentUser = await _dbContext.Users
+                        .FirstOrDefaultAsync(u => u.Id == reward.AgentId);
+                    agentName = agentUser?.Username;
+                }
+
                 mergedResults.Add(new CampaignResultDto
                 {
                     CustomerId = row.CustomerId,
@@ -89,6 +97,7 @@ namespace CustomerCampaign.Services
                     DateOfBirth = customerPreview?.DateOfBirth,
                     Age = customerPreview?.Age ?? 0,
                     AgentId = reward?.AgentId,
+                    AgentName = agentName,
                     RewardDate = reward?.RewardDate,
                     PurchaseDateTime = row.PurchaseDateTime,
                     AmountWithoutDiscount = row.AmountWithoutDiscount,

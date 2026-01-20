@@ -1,0 +1,36 @@
+.customer-reward {
+  max-width: 800px;
+}
+
+.customer-reward h1 {
+  margin-bottom: 20px;
+}
+
+.customer-preview {
+  margin-top: 20px;
+}
+
+.customer-details p {
+  margin-bottom: 10px;
+}
+
+.address {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}

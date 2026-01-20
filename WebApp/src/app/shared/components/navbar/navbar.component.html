@@ -1,0 +1,15 @@
+<nav class="navbar">
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <a routerLink="/dashboard">Customer Campaign</a>
+    </div>
+    <div class="navbar-menu" *ngIf="isAuthenticated">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/campaigns" routerLinkActive="active">Campaigns</a>
+      <a *ngIf="userRole === 'Admin'" routerLink="/admin/create-agent" routerLinkActive="active">Create Agent</a>
+      <a *ngIf="userRole === 'Agent'" routerLink="/agent/reward-customer" routerLinkActive="active">Reward Customer</a>
+      <span class="user-info">Role: {{ userRole }}</span>
+      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</nav>

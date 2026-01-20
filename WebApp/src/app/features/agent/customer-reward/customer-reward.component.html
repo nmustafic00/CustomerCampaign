@@ -1,0 +1,69 @@
+<div class="customer-reward">
+  <h1>Reward Customer</h1>
+
+  <div class="card">
+    <h3>Search Customer</h3>
+    <form [formGroup]="searchForm" (ngSubmit)="searchCustomer()">
+      <div class="form-group">
+        <label for="campaignId">Select Campaign</label>
+        <select id="campaignId" formControlName="campaignId">
+          <option value="">-- Select Campaign --</option>
+          <option *ngFor="let campaign of allCampaigns" [value]="campaign.id">
+            {{ campaign.name }} (ID: {{ campaign.id }})
+          </option>
+        </select>
+        <div class="error-message" *ngIf="searchForm.get('campaignId')?.invalid && searchForm.get('campaignId')?.touched">
+          Please select a campaign
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="customerId">Customer ID</label>
+        <input
+          id="customerId"
+          type="text"
+          formControlName="customerId"
+          placeholder="Enter customer ID"
+        >
+        <div class="error-message" *ngIf="searchForm.get('customerId')?.invalid && searchForm.get('customerId')?.touched">
+          Customer ID is required
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="searchForm.invalid || loadingCustomer">
+        {{ loadingCustomer ? 'Searching...' : 'Search Customer' }}
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="loadingCustomer" class="loading">Loading customer data...</div>
+
+  <div *ngIf="customerPreview" class="card customer-preview">
+    <h3>Customer Information</h3>
+    <div class="customer-details">
+      <p><strong>Customer ID:</strong> {{ customerPreview.customerId }}</p>
+      <p><strong>Full Name:</strong> {{ customerPreview.fullName }}</p>
+      <p><strong>Age:</strong> {{ customerPreview.age }}</p>
+      <p *ngIf="customerPreview.dateOfBirth"><strong>Date of Birth:</strong> {{ customerPreview.dateOfBirth | date }}</p>
+      <div *ngIf="customerPreview.homeAddress" class="address">
+        <strong>Address:</strong>
+        <p>{{ customerPreview.homeAddress.street }}</p>
+        <p>{{ customerPreview.homeAddress.city }}, {{ customerPreview.homeAddress.state }} {{ customerPreview.homeAddress.zipCode }}</p>
+        <p>{{ customerPreview.homeAddress.country }}</p>
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="error">{{ error }}</div>
+    <div *ngIf="success" style="color: #28a745; margin-bottom: 10px;">
+      {{ success }}
+    </div>
+
+    <button 
+      class="btn btn-primary" 
+      (click)="rewardCustomer()" 
+      [disabled]="rewarding || !selectedCampaignId"
+    >
+      {{ rewarding ? 'Processing...' : 'Reward Customer' }}
+    </button>
+  </div>
+</div>

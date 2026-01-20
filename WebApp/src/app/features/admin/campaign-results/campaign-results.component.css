@@ -1,0 +1,20 @@
+.campaign-results h1 {
+  margin-bottom: 20px;
+}
+
+.results-content {
+  margin-top: 20px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}

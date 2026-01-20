@@ -1,0 +1,47 @@
+<div class="create-agent">
+  <h1>Create New Agent</h1>
+
+  <div class="card">
+    <form [formGroup]="agentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="Enter username"
+        >
+        <div class="error-message" *ngIf="agentForm.get('username')?.invalid && agentForm.get('username')?.touched">
+          Username is required and must be at least 3 characters
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter password"
+        >
+        <div class="error-message" *ngIf="agentForm.get('password')?.invalid && agentForm.get('password')?.touched">
+          Password is required and must be at least 6 characters
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="error">{{ error }}</div>
+      <div *ngIf="success" style="color: #28a745; margin-bottom: 10px;">
+        {{ success }}
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="router.navigate(['/dashboard'])">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="agentForm.invalid || loading">
+          {{ loading ? 'Creating...' : 'Create Agent' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

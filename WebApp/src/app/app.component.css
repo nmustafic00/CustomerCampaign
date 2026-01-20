@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+main {
+  padding-top: 20px;
+  min-height: calc(100vh - 70px);
+}

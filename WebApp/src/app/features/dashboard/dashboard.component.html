@@ -1,0 +1,47 @@
+<div class="dashboard">
+  <h1>Dashboard</h1>
+  <div class="dashboard-content">
+    <div class="card">
+      <h3>Welcome!</h3>
+      <p>You are logged in as: <strong>{{ userRole }}</strong></p>
+    </div>
+
+    <div *ngIf="isAdmin" class="admin-section">
+      <div class="card">
+        <h3>Admin Actions</h3>
+        <div class="action-buttons">
+          <a routerLink="/admin/create-agent" class="btn btn-primary">Create New Agent</a>
+          <a routerLink="/campaigns/create" class="btn btn-primary">Create New Campaign</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Campaign Management</h3>
+        <div class="action-buttons">
+          <a routerLink="/campaigns" class="btn btn-secondary">View All Campaigns</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Campaign Results</h3>
+        <p>Navigate to a specific campaign to view results and upload CSV files.</p>
+      </div>
+    </div>
+
+    <div *ngIf="isAgent" class="agent-section">
+      <div class="card">
+        <h3>Agent Actions</h3>
+        <div class="action-buttons">
+          <a routerLink="/agent/reward-customer" class="btn btn-primary">Reward Customer</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Quick Links</h3>
+        <div class="action-buttons">
+          <a routerLink="/campaigns" class="btn btn-secondary">View All Campaigns</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

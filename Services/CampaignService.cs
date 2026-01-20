@@ -24,7 +24,9 @@ namespace CustomerCampaign.Services
                 .Select(c => new CampaignBasicDto
                 {
                     Id = c.Id,
-                    Name = c.Name
+                    Name = c.Name,
+                    StartDate = c.StartDate,
+                    EndDate = c.EndDate
                 })
                 .ToListAsync();
         }

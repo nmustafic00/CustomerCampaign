@@ -1,0 +1,69 @@
+<div class="create-campaign">
+  <h1>Create New Campaign</h1>
+
+  <div class="card">
+    <form [formGroup]="campaignForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Campaign Name</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Enter campaign name"
+        >
+        <div class="error-message" *ngIf="campaignForm.get('name')?.invalid && campaignForm.get('name')?.touched">
+          Campaign name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input
+          id="startDate"
+          type="date"
+          formControlName="startDate"
+        >
+        <div class="error-message" *ngIf="campaignForm.get('startDate')?.invalid && campaignForm.get('startDate')?.touched">
+          Start date is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input
+          id="endDate"
+          type="date"
+          formControlName="endDate"
+        >
+        <div class="error-message" *ngIf="campaignForm.get('endDate')?.invalid && campaignForm.get('endDate')?.touched">
+          End date is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dailyLimitPerAgent">Daily Limit Per Agent</label>
+        <input
+          id="dailyLimitPerAgent"
+          type="number"
+          formControlName="dailyLimitPerAgent"
+          min="1"
+          placeholder="Enter daily limit"
+        >
+        <div class="error-message" *ngIf="campaignForm.get('dailyLimitPerAgent')?.invalid && campaignForm.get('dailyLimitPerAgent')?.touched">
+          Daily limit is required and must be at least 1
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="error">{{ error }}</div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="router.navigate(['/campaigns'])">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="campaignForm.invalid || loading">
+          {{ loading ? 'Creating...' : 'Create Campaign' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

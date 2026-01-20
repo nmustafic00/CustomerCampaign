@@ -1,0 +1,15 @@
+.campaign-detail {
+  max-width: 800px;
+}
+
+.campaign-detail button {
+  margin-bottom: 20px;
+}
+
+.campaign-info {
+  margin-top: 20px;
+}
+
+.campaign-details p {
+  margin-bottom: 10px;
+}

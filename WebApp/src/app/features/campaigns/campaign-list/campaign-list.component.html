@@ -1,0 +1,44 @@
+<div class="campaign-list">
+  <h1>Campaigns</h1>
+
+  <div *ngIf="loading" class="loading">Loading campaigns...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="!loading && !error">
+    <table class="table" *ngIf="campaigns.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let campaign of campaigns">
+          <td>{{ campaign.id }}</td>
+          <td>{{ campaign.name }}</td>
+          <td>
+            <div class="action-buttons">
+              <button class="btn btn-primary" (click)="viewCampaign(campaign.id)">
+                View Details
+              </button>
+              <button *ngIf="isAdmin" class="btn btn-secondary" (click)="viewResults(campaign.id)">
+                View Results
+              </button>
+              <button *ngIf="isAdmin" class="btn btn-secondary" (click)="uploadCsv(campaign.id)">
+                Upload CSV
+              </button>
+              <button *ngIf="isAgent" class="btn btn-secondary" (click)="viewAgentResults(campaign.id)">
+                View Results
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="campaigns.length === 0" class="card">
+      <p>No campaigns found.</p>
+    </div>
+  </div>
+</div>

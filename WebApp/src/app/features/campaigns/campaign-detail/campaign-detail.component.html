@@ -1,0 +1,20 @@
+<div class="campaign-detail">
+  <button class="btn btn-secondary" (click)="router.navigate(['/campaigns'])">
+    ← Back to Campaigns
+  </button>
+
+  <div *ngIf="loading" class="loading">Loading campaign...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="!loading && campaign" class="campaign-info">
+    <div class="card">
+      <h2>{{ campaign.name }}</h2>
+      <div class="campaign-details">
+        <p><strong>ID:</strong> {{ campaign.id }}</p>
+        <p><strong>Start Date:</strong> {{ campaign.startDate | date }}</p>
+        <p><strong>End Date:</strong> {{ campaign.endDate | date }}</p>
+        <p><strong>Daily Limit Per Agent:</strong> {{ campaign.dailyLimitPerAgent }}</p>
+      </div>
+    </div>
+  </div>
+</div>
